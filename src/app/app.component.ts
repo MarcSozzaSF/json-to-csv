@@ -8,6 +8,26 @@ import { AppService } from './app.service';
 })
 export class AppComponent {
   jsonData: any = [];
+  header: string[] = [
+    'city',
+    'cityNumber',
+    'districtNumber',
+    'incrementalNumber',
+    'postcode',
+    'street',
+    'number',
+    'locality',
+    'localityNumber',
+    'lastname',
+    'firstname',
+    'dateofbirth',
+    'householdNumber',
+    'registrationNumber',
+    'cadastre',
+    'resident',
+  ];
+  isFileJsonUpload = false;
+
   constructor(private appService: AppService) {}
 
   readJson(event: any) {
@@ -18,8 +38,11 @@ export class AppComponent {
       reader.readAsText(file, 'UTF-8');
       reader.onload = function (evt: any) {
         that.jsonData = [];
-        console.log(JSON.parse(evt.target['result']));
         that.jsonData = JSON.parse(evt.target['result']);
+        let firstLine = JSON.parse(evt.target['result'])[0];
+        let newHeader: string[] = [];
+        for (const item in firstLine) { newHeader.push(item)}
+        that.header = newHeader.slice();
       };
       reader.onerror = function (evt) {
         console.log('error reading file');
@@ -28,6 +51,10 @@ export class AppComponent {
   }
 
   download() {
-    this.appService.downloadFile(this.jsonData, 'jsontocsv');
+    this.appService.downloadFile(this.jsonData, 'jsontocsv', this.header);
+  }
+
+  downloadSQL() {
+    this.appService.downloadFile(this.jsonData, 'jsonToSql', this.header, 'SQL');
   }
 }

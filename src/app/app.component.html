@@ -1,4 +1,15 @@
-<h1>Convert Json to CSV file and Download it in the .csv format</h1>
+<h1>Convertisseur 1.0</h1>
 
-<input type=file (change)=readJson($event)>
-<button (click)="download()"> Download </button>
+<div class="flex-column">
+  <h2>Convertir en CSV</h2>
+  <input type=file (change)=readJson($event)>
+  <button (click)="download()">Download</button>
+</div>
+
+<hr>
+
+<div class="flex-column">
+  <h2>Convertir en script SQL</h2>
+  <input type=file (change)=readJson($event)>
+  <button (click)="downloadSQL()">Download</button>
+</div>

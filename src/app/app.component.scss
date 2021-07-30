@@ -1,0 +1,22 @@
+
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 2em;
+
+  button {
+    padding: 10px;
+    cursor: pointer;
+    background-color: lightcoral;
+    border: 2px solid lightcoral;
+    border-radius: 25px;
+  }
+
+  button:disabled {
+    background-color: lightgrey;
+    border-color: grey;
+  }
+}
