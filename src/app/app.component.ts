@@ -2,39 +2,32 @@ import { Component } from '@angular/core';
 import { AppService } from './app.service';
 
 @Component({
-  selector: 'app-route',
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent  {
+export class AppComponent {
+  jsonData: any = [];
+  constructor(private appService: AppService) {}
 
-  constructor(private appService:AppService) {  }
+  readJson(event: any) {
+    var file = event.srcElement.files[0];
+    if (file) {
+      let that = this;
+      var reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = function (evt: any) {
+        that.jsonData = [];
+        console.log(JSON.parse(evt.target['result']));
+        that.jsonData = JSON.parse(evt.target['result']);
+      };
+      reader.onerror = function (evt) {
+        console.log('error reading file');
+      };
+    }
+  }
 
-    jsonData =  [
-      {
-        name: "Anil Singh",
-        age: 33,
-        average: 98,
-        approved: true,
-        description: "I am active blogger and Author."
-      },
-      {
-        name: 'Reena Singh',
-        age: 28,
-        average: 99,
-        approved: true,
-        description: "I am active HR."
-      },
-      {
-        name: 'Aradhya',
-        age: 4,
-        average: 99,
-        approved: true,
-        description: "I am engle."
-      },
-    ];
-
-  download(){
+  download() {
     this.appService.downloadFile(this.jsonData, 'jsontocsv');
   }
 }
